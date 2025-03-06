@@ -18,7 +18,7 @@ import { useLanguage } from "./components/language-provider";
 export default function App() {
   const { theme } = useTheme();
   const { t, language, setLanguage } = useLanguage();
-  const [isMetric, setIsMetric] = useState(true);
+  const [isMetric, setIsMetric] = useState(false);
 
   useEffect(() => {
     document.body.className = theme;
@@ -97,7 +97,7 @@ export default function App() {
       </div>
 
       <Tabs defaultValue="length" className="max-w-3xl mx-auto">
-        <TabsList className="grid grid-cols-4 mb-8">
+        <TabsList className="grid grid-cols-4 mb-8 max-sm:self-center">
           <TabsTrigger value="length">{t("length")}</TabsTrigger>
           <TabsTrigger value="weight">{t("weight")}</TabsTrigger>
           <TabsTrigger value="volume">{t("volume")}</TabsTrigger>

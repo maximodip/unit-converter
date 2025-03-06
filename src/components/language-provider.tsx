@@ -28,7 +28,8 @@ type TranslationKey =
   | "celsius"
   | "fahrenheit"
   | "english"
-  | "spanish";
+  | "spanish"
+  | "madeby";
 
 type Translations = {
   [key in Language]: {
@@ -67,6 +68,7 @@ const translations: Translations = {
     fahrenheit: "Fahrenheit",
     english: "English",
     spanish: "Spanish",
+    madeby: "Made by ",
   },
   es: {
     unitConverter: "Conversor de Unidades",
@@ -92,6 +94,7 @@ const translations: Translations = {
     fahrenheit: "Fahrenheit",
     english: "Inglés",
     spanish: "Español",
+    madeby: "Programado por ",
   },
 };
 

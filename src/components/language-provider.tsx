@@ -5,13 +5,44 @@ import { createContext, useContext, useState } from "react";
 
 type Language = "en" | "es";
 
+type TranslationKey =
+  | "unitConverter"
+  | "us"
+  | "metric"
+  | "length"
+  | "weight"
+  | "volume"
+  | "temperature"
+  | "lengthConversion"
+  | "weightConversion"
+  | "volumeConversion"
+  | "temperatureConversion"
+  | "convertFromTo"
+  | "enter"
+  | "centimeters"
+  | "inches"
+  | "grams"
+  | "ounces"
+  | "milliliters"
+  | "fluidOunces"
+  | "celsius"
+  | "fahrenheit"
+  | "english"
+  | "spanish";
+
+type Translations = {
+  [key in Language]: {
+    [key in TranslationKey]: string;
+  };
+};
+
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: TranslationKey) => string;
 };
 
-const translations = {
+const translations: Translations = {
   en: {
     unitConverter: "Unit Converter",
     us: "US",
@@ -73,8 +104,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [language, setLanguage] = useState<Language>("en");
 
-  const t = (key: string): string => {
-    return translations[language][key] || key;
+  const t = (key: TranslationKey): string => {
+    return translations[language][key];
   };
 
   return (

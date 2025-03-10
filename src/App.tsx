@@ -25,11 +25,13 @@ export default function App() {
     document.body.className = theme;
   }, [theme]);
 
-  // Length state
-  const [length, setLength] = useState<string>("");
+  // Length states
+  const [inches, setInches] = useState<string>("");
+  const [feet, setFeet] = useState<string>("");
 
-  // Weight state
-  const [weight, setWeight] = useState<string>("");
+  // Weight states
+  const [ounces, setOunces] = useState<string>("");
+  const [pounds, setPounds] = useState<string>("");
 
   // Volume state
   const [volume, setVolume] = useState<string>("");
@@ -37,8 +39,12 @@ export default function App() {
   // Temperature state
   const [temperature, setTemperature] = useState<string>("");
 
+  // Speed state
+  const [speed, setSpeed] = useState<string>("");
+
   // Conversion functions
-  const convertLength = (value: number) => {
+  // Length conversions
+  const convertInches = (value: number) => {
     if (isMetric) {
       return (value * 0.393701).toFixed(2) + " " + t("inches");
     } else {
@@ -46,7 +52,16 @@ export default function App() {
     }
   };
 
-  const convertWeight = (value: number) => {
+  const convertFeet = (value: number) => {
+    if (isMetric) {
+      return (value * 3.28084).toFixed(2) + " " + t("feet");
+    } else {
+      return (value * 0.3048).toFixed(2) + " " + t("meters");
+    }
+  };
+
+  // Weight conversions
+  const convertOunces = (value: number) => {
     if (isMetric) {
       return (value * 0.035274).toFixed(2) + " " + t("ounces");
     } else {
@@ -54,6 +69,15 @@ export default function App() {
     }
   };
 
+  const convertPounds = (value: number) => {
+    if (isMetric) {
+      return (value * 2.20462).toFixed(2) + " " + t("pounds");
+    } else {
+      return (value * 0.453592).toFixed(2) + " " + t("kilograms");
+    }
+  };
+
+  // Volume conversion
   const convertVolume = (value: number) => {
     if (isMetric) {
       return (value * 0.033814).toFixed(2) + " " + t("fluidOunces");
@@ -62,6 +86,7 @@ export default function App() {
     }
   };
 
+  // Temperature conversion
   const convertTemperature = (value: number) => {
     if (isMetric) {
       return ((value * 9) / 5 + 32).toFixed(1) + " °F";
@@ -70,8 +95,17 @@ export default function App() {
     }
   };
 
+  // Speed conversion
+  const convertSpeed = (value: number) => {
+    if (isMetric) {
+      return (value * 0.621371).toFixed(2) + " " + t("mph");
+    } else {
+      return (value * 1.60934).toFixed(2) + " " + t("kmh");
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <div className="flex flex-col min-h-dvh bg-background text-foreground">
       <main className="flex-grow container mx-auto py-10 px-4">
         <h1 className="text-3xl font-bold text-center mb-8">
           {t("unitConverter")}
@@ -98,12 +132,16 @@ export default function App() {
           </div>
         </div>
 
-        <Tabs defaultValue="length" className="max-w-3xl mx-auto">
-          <TabsList className="grid grid-cols-4 mb-8">
+        <Tabs
+          defaultValue="length"
+          className="max-w-3xl mx-auto max-sm:items-center"
+        >
+          <TabsList className="grid grid-cols-5 mb-8">
             <TabsTrigger value="length">{t("length")}</TabsTrigger>
             <TabsTrigger value="weight">{t("weight")}</TabsTrigger>
-            <TabsTrigger value="volume">{t("volume")}</TabsTrigger>
+            <TabsTrigger value="speed">{t("speed")}</TabsTrigger>
             <TabsTrigger value="temperature">{t("temperature")}</TabsTrigger>
+            <TabsTrigger value="volume">{t("volume")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="length">
@@ -114,31 +152,61 @@ export default function App() {
                   {t("convertFromTo")
                     .replace(
                       "{from}",
-                      isMetric ? t("centimeters") : t("inches")
+                      isMetric
+                        ? t("centimeters") + "/" + t("meters")
+                        : t("inches") + "/" + t("feet")
                     )
-                    .replace("{to}", isMetric ? t("inches") : t("centimeters"))}
+                    .replace(
+                      "{to}",
+                      isMetric
+                        ? t("inches") + "/" + t("feet")
+                        : t("centimeters") + "/" + t("meters")
+                    )}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="length">
-                    {isMetric ? t("centimeters") : t("inches")}
-                  </Label>
-                  <Input
-                    id="length"
-                    type="number"
-                    placeholder={t("enter").replace(
-                      "{unit}",
-                      isMetric ? t("centimeters") : t("inches")
-                    )}
-                    value={length}
-                    onChange={(e) => setLength(e.target.value)}
-                  />
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {length && !isNaN(Number.parseFloat(length))
-                    ? convertLength(Number.parseFloat(length))
-                    : `0 ${isMetric ? t("inches") : t("centimeters")}`}
+              <CardContent className="grid gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="inches">
+                      {isMetric ? t("centimeters") : t("inches")}
+                    </Label>
+                    <Input
+                      id="inches"
+                      type="number"
+                      placeholder={t("enter").replace(
+                        "{unit}",
+                        isMetric ? t("centimeters") : t("inches")
+                      )}
+                      value={inches}
+                      onChange={(e) => setInches(e.target.value)}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      {inches && !isNaN(Number.parseFloat(inches))
+                        ? convertInches(Number.parseFloat(inches))
+                        : `0 ${isMetric ? t("inches") : t("centimeters")}`}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="feet">
+                      {isMetric ? t("meters") : t("feet")}
+                    </Label>
+                    <Input
+                      id="feet"
+                      type="number"
+                      placeholder={t("enter").replace(
+                        "{unit}",
+                        isMetric ? t("meters") : t("feet")
+                      )}
+                      value={feet}
+                      onChange={(e) => setFeet(e.target.value)}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      {feet && !isNaN(Number.parseFloat(feet))
+                        ? convertFeet(Number.parseFloat(feet))
+                        : `0 ${isMetric ? t("feet") : t("meters")}`}
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -150,30 +218,63 @@ export default function App() {
                 <CardTitle>{t("weightConversion")}</CardTitle>
                 <CardDescription>
                   {t("convertFromTo")
-                    .replace("{from}", isMetric ? t("grams") : t("ounces"))
-                    .replace("{to}", isMetric ? t("ounces") : t("grams"))}
+                    .replace(
+                      "{from}",
+                      isMetric
+                        ? t("grams") + "/" + t("kilograms")
+                        : t("ounces") + "/" + t("pounds")
+                    )
+                    .replace(
+                      "{to}",
+                      isMetric
+                        ? t("ounces") + "/" + t("pounds")
+                        : t("grams") + "/" + t("kilograms")
+                    )}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="weight">
-                    {isMetric ? t("grams") : t("ounces")}
-                  </Label>
-                  <Input
-                    id="weight"
-                    type="number"
-                    placeholder={t("enter").replace(
-                      "{unit}",
-                      isMetric ? t("grams") : t("ounces")
-                    )}
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                  />
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {weight && !isNaN(Number.parseFloat(weight))
-                    ? convertWeight(Number.parseFloat(weight))
-                    : `0 ${isMetric ? t("ounces") : t("grams")}`}
+              <CardContent className="grid gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="ounces">
+                      {isMetric ? t("grams") : t("ounces")}
+                    </Label>
+                    <Input
+                      id="ounces"
+                      type="number"
+                      placeholder={t("enter").replace(
+                        "{unit}",
+                        isMetric ? t("grams") : t("ounces")
+                      )}
+                      value={ounces}
+                      onChange={(e) => setOunces(e.target.value)}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      {ounces && !isNaN(Number.parseFloat(ounces))
+                        ? convertOunces(Number.parseFloat(ounces))
+                        : `0 ${isMetric ? t("ounces") : t("grams")}`}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="pounds">
+                      {isMetric ? t("kilograms") : t("pounds")}
+                    </Label>
+                    <Input
+                      id="pounds"
+                      type="number"
+                      placeholder={t("enter").replace(
+                        "{unit}",
+                        isMetric ? t("kilograms") : t("pounds")
+                      )}
+                      value={pounds}
+                      onChange={(e) => setPounds(e.target.value)}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      {pounds && !isNaN(Number.parseFloat(pounds))
+                        ? convertPounds(Number.parseFloat(pounds))
+                        : `0 ${isMetric ? t("pounds") : t("kilograms")}`}
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -253,6 +354,41 @@ export default function App() {
                   {temperature && !isNaN(Number.parseFloat(temperature))
                     ? convertTemperature(Number.parseFloat(temperature))
                     : `0 ${isMetric ? "°F" : "°C"}`}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="speed">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("speedConversion")}</CardTitle>
+                <CardDescription>
+                  {t("convertFromTo")
+                    .replace("{from}", isMetric ? t("kmh") : t("mph"))
+                    .replace("{to}", isMetric ? t("mph") : t("kmh"))}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="speed">
+                    {isMetric ? t("kmh") : t("mph")}
+                  </Label>
+                  <Input
+                    id="speed"
+                    type="number"
+                    placeholder={t("enter").replace(
+                      "{unit}",
+                      isMetric ? t("kmh") : t("mph")
+                    )}
+                    value={speed}
+                    onChange={(e) => setSpeed(e.target.value)}
+                  />
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {speed && !isNaN(Number.parseFloat(speed))
+                    ? convertSpeed(Number.parseFloat(speed))
+                    : `0 ${isMetric ? t("mph") : t("kmh")}`}
                 </div>
               </CardContent>
             </Card>

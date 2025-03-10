@@ -13,20 +13,28 @@ type TranslationKey =
   | "weight"
   | "volume"
   | "temperature"
+  | "speed"
   | "lengthConversion"
   | "weightConversion"
   | "volumeConversion"
   | "temperatureConversion"
+  | "speedConversion"
   | "convertFromTo"
   | "enter"
   | "centimeters"
   | "inches"
+  | "meters"
+  | "feet"
   | "grams"
   | "ounces"
+  | "kilograms"
+  | "pounds"
   | "milliliters"
   | "fluidOunces"
   | "celsius"
   | "fahrenheit"
+  | "kmh"
+  | "mph"
   | "english"
   | "spanish"
   | "madeby";
@@ -51,24 +59,32 @@ const translations: Translations = {
     length: "Length",
     weight: "Weight",
     volume: "Volume",
-    temperature: "Temperature",
+    temperature: "Temp",
+    speed: "Speed",
     lengthConversion: "Length Conversion",
     weightConversion: "Weight Conversion",
     volumeConversion: "Volume Conversion",
     temperatureConversion: "Temperature Conversion",
+    speedConversion: "Speed Conversion",
     convertFromTo: "Convert from {from} to {to}",
     enter: "Enter {unit}",
     centimeters: "Centimeters",
     inches: "Inches",
+    meters: "Meters",
+    feet: "Feet",
     grams: "Grams",
     ounces: "Ounces",
+    kilograms: "Kilograms",
+    pounds: "Pounds",
     milliliters: "Milliliters",
     fluidOunces: "Fluid Ounces",
     celsius: "Celsius",
     fahrenheit: "Fahrenheit",
+    kmh: "km/h",
+    mph: "mph",
     english: "English",
     spanish: "Spanish",
-    madeby: "Made by ",
+    madeby: "Made by",
   },
   es: {
     unitConverter: "Conversor de Unidades",
@@ -77,24 +93,32 @@ const translations: Translations = {
     length: "Longitud",
     weight: "Peso",
     volume: "Volumen",
-    temperature: "Temperatura",
+    temperature: "Temp",
+    speed: "Velocidad",
     lengthConversion: "Conversión de Longitud",
     weightConversion: "Conversión de Peso",
     volumeConversion: "Conversión de Volumen",
     temperatureConversion: "Conversión de Temperatura",
+    speedConversion: "Conversión de Velocidad",
     convertFromTo: "Convertir de {from} a {to}",
     enter: "Ingrese {unit}",
     centimeters: "Centímetros",
     inches: "Pulgadas",
+    meters: "Metros",
+    feet: "Pies",
     grams: "Gramos",
     ounces: "Onzas",
+    kilograms: "Kilogramos",
+    pounds: "Libras",
     milliliters: "Mililitros",
     fluidOunces: "Onzas Líquidas",
     celsius: "Celsius",
     fahrenheit: "Fahrenheit",
+    kmh: "km/h",
+    mph: "mph",
     english: "Inglés",
     spanish: "Español",
-    madeby: "Programado por ",
+    madeby: "Programado por",
   },
 };
 

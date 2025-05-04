@@ -28,7 +28,7 @@ type TranslationKey =
   | "grams"
   | "ounces"
   | "kilograms"
-  | "pounds"
+  | "lbs"
   | "milliliters"
   | "fluidOunces"
   | "celsius"
@@ -75,7 +75,7 @@ const translations: Translations = {
     grams: "Grams",
     ounces: "Ounces",
     kilograms: "Kilograms",
-    pounds: "Pounds",
+    lbs: "Lbs",
     milliliters: "Milliliters",
     fluidOunces: "Fluid Ounces",
     celsius: "Celsius",
@@ -109,7 +109,7 @@ const translations: Translations = {
     grams: "Gramos",
     ounces: "Onzas",
     kilograms: "Kilogramos",
-    pounds: "Libras",
+    lbs: "Libras",
     milliliters: "Mililitros",
     fluidOunces: "Onzas Líquidas",
     celsius: "Celsius",

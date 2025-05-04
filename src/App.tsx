@@ -31,7 +31,7 @@ export default function App() {
 
   // Weight states
   const [ounces, setOunces] = useState<string>("");
-  const [pounds, setPounds] = useState<string>("");
+  const [lbs, setLbs] = useState<string>("");
 
   // Volume state
   const [volume, setVolume] = useState<string>("");
@@ -69,9 +69,9 @@ export default function App() {
     }
   };
 
-  const convertPounds = (value: number) => {
+  const convertLbs = (value: number) => {
     if (isMetric) {
-      return (value * 2.20462).toFixed(2) + " " + t("pounds");
+      return (value * 2.20462).toFixed(2) + " " + t("lbs");
     } else {
       return (value * 0.453592).toFixed(2) + " " + t("kilograms");
     }
@@ -222,18 +222,38 @@ export default function App() {
                       "{from}",
                       isMetric
                         ? t("grams") + "/" + t("kilograms")
-                        : t("ounces") + "/" + t("pounds")
+                        : t("ounces") + "/" + t("lbs")
                     )
                     .replace(
                       "{to}",
                       isMetric
-                        ? t("ounces") + "/" + t("pounds")
+                        ? t("ounces") + "/" + t("lbs")
                         : t("grams") + "/" + t("kilograms")
                     )}
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="lbs">
+                      {isMetric ? t("kilograms") : t("lbs")}
+                    </Label>
+                    <Input
+                      id="lbs"
+                      type="number"
+                      placeholder={t("enter").replace(
+                        "{unit}",
+                        isMetric ? t("kilograms") : t("lbs")
+                      )}
+                      value={lbs}
+                      onChange={(e) => setLbs(e.target.value)}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      {lbs && !isNaN(Number.parseFloat(lbs))
+                        ? convertLbs(Number.parseFloat(lbs))
+                        : `0 ${isMetric ? t("lbs") : t("kilograms")}`}
+                    </p>
+                  </div>
                   <div className="space-y-2">
                     <Label htmlFor="ounces">
                       {isMetric ? t("grams") : t("ounces")}
@@ -252,27 +272,6 @@ export default function App() {
                       {ounces && !isNaN(Number.parseFloat(ounces))
                         ? convertOunces(Number.parseFloat(ounces))
                         : `0 ${isMetric ? t("ounces") : t("grams")}`}
-                    </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="pounds">
-                      {isMetric ? t("kilograms") : t("pounds")}
-                    </Label>
-                    <Input
-                      id="pounds"
-                      type="number"
-                      placeholder={t("enter").replace(
-                        "{unit}",
-                        isMetric ? t("kilograms") : t("pounds")
-                      )}
-                      value={pounds}
-                      onChange={(e) => setPounds(e.target.value)}
-                    />
-                    <p className="text-sm text-muted-foreground">
-                      {pounds && !isNaN(Number.parseFloat(pounds))
-                        ? convertPounds(Number.parseFloat(pounds))
-                        : `0 ${isMetric ? t("pounds") : t("kilograms")}`}
                     </p>
                   </div>
                 </div>
